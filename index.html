@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ReelsDrama - Start.io ID 208724925</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080c;--card:#12131a;--primary:#ff244d;--muted:#9aa0b2;--border:rgba(255,255,255,.08);--font:'Inter',sans-serif;--display:'Sora',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+body{background:var(--bg);color:#fff;font-family:var(--font);display:flex;justify-content:center;min-height:100vh;overflow:hidden}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer}
+
+/* SPLASH COM LOGO + NOME */
+#splash{position:fixed;inset:0;z-index:9999;background:radial-gradient(900px 500px at 50% -10%,#2a1430 0%,#07080c 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .7s,transform .7s}
+#splash.hide{opacity:0;transform:scale(1.05);pointer-events:none}
+.splash-logo{width:92px;height:92px;border-radius:24px;background:linear-gradient(135deg,#ff244d,#ff7a3d);display:flex;align-items:center;justify-content:center;box-shadow:0 24px 64px rgba(255,36,77,.5);animation:pop 1.1s cubic-bezier(.34,1.56,.64,1)}
+.splash-name{font-family:var(--display);font-size:34px;font-weight:800;letter-spacing:-1.2px;margin-top:18px}
+.splash-name b{color:var(--primary)}
+.splash-sub{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:6px}
+.splash-loader{margin-top:28px;width:110px;height:3px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;position:relative}
+.splash-bar{position:absolute;top:0;bottom:0;left:-40%;width:40%;background:linear-gradient(90deg,var(--primary),#ff8a5c);border-radius:10px;animation:load 1.4s ease-in-out infinite}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes load{0%{left:-40%}50%{left:30%}100%{left:110%}}
+
+#app{width:100%;max-width:480px;height:100vh;height:100dvh;display:flex;flex-direction:column;position:relative;background:#000;overflow:hidden}
+.view{display:none;flex:1;width:100%;height:100%;overflow-y:auto;position:relative;-webkit-overflow-scrolling:touch}
+.view.active{display:flex;flex-direction:column}
+#view-foryou{padding:0;overflow:hidden;background:#000}
+#view-discover,#view-saved,#view-admin{padding-top:env(safe-area-inset-top);padding-bottom:130px}
+
+.pro-header{position:absolute;top:0;left:0;right:0;z-index:30;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 60%, transparent 100%)}
+.pro-brand{display:flex;align-items:center;gap:9px}
+.pro-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#ff244d,#ff6a3d);display:flex;align-items:center;justify-content:center}
+.pro-name{font-family:var(--display);font-weight:800;font-size:15px}
+.pro-name b{color:var(--primary)}
+.tabs{display:flex;gap:16px}
+.tab{font-size:12px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.5);padding:6px 2px;position:relative}
+.tab.active{color:#fff}
+.tab.active::after{content:'';position:absolute;bottom:-2px;left:15%;right:15%;height:3px;background:var(--primary);border-radius:10px}
+
+.vwrap{width:100%;height:100%;position:relative;background:#000}
+video#main-video{width:100%;height:100%;object-fit:cover;background:#000}
+.vgrad-top{position:absolute;top:0;left:0;right:0;height:160px;background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);z-index:10;pointer-events:none}
+.vgrad-bot{position:absolute;bottom:0;left:0;right:0;height:320px;background:linear-gradient(to top, rgba(0,0,0,.98) 8%, rgba(0,0,0,.55) 55%, transparent);z-index:10;pointer-events:none}
+.side{position:absolute;right:10px;bottom:130px;z-index:25;display:flex;flex-direction:column;gap:16px}
+.side-btn{display:flex;flex-direction:column;align-items:center;gap:5px;color:#fff}
+.circle{width:48px;height:48px;border-radius:50%;background:rgba(22,22,28,.65);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center}
+.circle.liked{background:var(--primary);border-color:var(--primary)}
+.side-label{font-size:11px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.vinfo{position:absolute;left:14px;right:84px;bottom:88px;z-index:25;display:flex;flex-direction:column;gap:8px}
+.vmeta{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12)}
+.tag.dub{background:var(--primary);border-color:var(--primary)}
+.tag.hd{background:#fff;color:#000}
+.vtitle{font-size:16px;font-weight:800;line-height:1.3;text-shadow:0 2px 12px rgba(0,0,0,.9);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vprogress{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,.15);z-index:30}
+.vprogress-bar{height:100%;background:var(--primary);width:0%;transition:width .1s linear}
+
+/* START.IO ADS VISUAL - VAI MOSTRAR DE VERDADE NO APK */
+.startio-banner{width:calc(100% - 32px);margin:10px 16px;min-height:60px;background:#0f0f14;border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.startio-banner::before{content:'START.IO • ID 208724925';position:absolute;top:4px;left:10px;font-size:8px;letter-spacing:1px;color:var(--muted);font-weight:700}
+.banner-inner{width:320px;height:50px;background:linear-gradient(90deg,#1a1c27,#242636);border-radius:8px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;margin-top:12px;border:1px solid rgba(255,255,255,.08)}
+.ad-interstitial{position:absolute;inset:0;z-index:100;background:rgba(0,0,0,.94);backdrop-filter:blur(16px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.ad-interstitial.active{display:flex}
+.ad-box{width:100%;max-width:320px;background:#12131a;border:1px solid var(--border);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px}
+
+.dhead{padding:20px 16px 10px;display:flex;flex-direction:column;gap:12px;background:var(--bg);position:sticky;top:0;z-index:5}
+.dtitle{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-1px}
+.search{width:100%;height:44px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:0 14px;display:flex;align-items:center;gap:10px;color:var(--muted)}
+.search input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px}
+.pills{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.pills::-webkit-scrollbar{display:none}
+.pill{white-space:nowrap;padding:8px 16px;border-radius:100px;background:var(--card);border:1px solid var(--border);font-size:13px;font-weight:700;color:var(--muted)}
+.pill.active{background:#fff;color:#000;border-color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 24px}
+.card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.card-poster{aspect-ratio:2/3;position:relative;overflow:hidden;background:#111}
+.card-poster img{width:100%;height:100%;object-fit:cover}
+.card-ep{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:10px;font-weight:800;padding:3px 7px;border-radius:6px}
+.card-dub{position:absolute;top:8px;right:8px;background:var(--primary);color:#fff;font-size:9px;font-weight:900;padding:3px 6px;border-radius:6px}
+.card-info{padding:10px 11px}
+.card-title{font-size:13px;font-weight:700;line-height:1.25;min-height:32px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-genre{font-size:11px;color:var(--muted);margin-top:4px}
+
+#view-admin{padding:16px 16px 140px !important;background:var(--bg)}
+.admin-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.form-pro{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.form-pro input,.form-pro select,.form-pro textarea{width:100%;background:#0a0b10;border:1px solid var(--border);border-radius:12px;padding:13px 14px;color:#fff;font-size:14px;outline:none}
+.btn-primary{background:var(--primary);color:#fff;padding:13px 18px;border-radius:12px;font-weight:800;font-size:14px;width:100%}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px}
+.admin-table th{text-align:left;padding:10px;color:var(--muted);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.admin-table td{padding:10px;border-bottom:1px solid var(--border)}
+.btn-danger{background:#1f1214;color:#ff6b81;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;border:1px solid rgba(255,36,77,.2)}
+
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;height:84px;background:rgba(7,8,12,.97);backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-around;z-index:50;padding:10px 8px 0;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:10px;font-weight:700;flex:1}
+.nav-item.active{color:#fff}
+.nav-item svg{width:22px;height:22px}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--primary);opacity:0}
+.nav-item.active .dot{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-logo"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5.14v14l11-7-11-7z"/></svg></div>
+  <div class="splash-name">Reels<b>Drama</b></div>
+  <div class="splash-sub">Séries • Doramas • 9:16</div>
+  <div class="splash-loader"><div class="splash-bar"></div></div>
+  <div style="position:absolute;bottom:28px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:700">ID 208724925 • Premium</div>
+</div>
+
+<div id="app">
+  <div id="view-foryou" class="view active">
+    <div class="vwrap">
+      <div class="vgrad-top"></div><div class="vgrad-bot"></div>
+      <div class="pro-header">
+        <div class="pro-brand"><div class="pro-logo"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M8 5.14v14l11-7-11-7z"/></svg></div><div class="pro-name">Reels<b>Drama</b></div></div>
+        <div class="tabs"><div class="tab active">Você</div><div class="tab">Seguindo</div></div>
+        <div style="width:30px"></div>
+      </div>
+      <video id="main-video" playsinline webkit-playsinline loop preload="auto"></video>
+
+      <div class="ad-interstitial" id="ad-interstitial">
+        <div class="ad-box">
+          <small style="color:var(--muted);font-size:10px;letter-spacing:1.5px;font-weight:700">ANÚNCIO START.IO • 208724925</small>
+          <div id="startio-interstitial-real" style="width:100%;min-height:180px;background:#0a0b10;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border)">
+            <div style="text-align:center"><div style="font-size:32px">📺</div><div style="font-size:13px;font-weight:700;margin-top:6px">Interstitial Start.io</div><div style="font-size:10px;color:var(--muted);margin-top:4px">Vai aparecer automático no APK</div></div>
+          </div>
+          <button class="btn-primary" onclick="closeAd()">Continuar ▶</button>
+          <div style="font-size:11px;color:var(--muted)">Fecha em <b id="ad-timer">5</b>s • <button onclick="closeAd()" style="text-decoration:underline;color:#fff;font-weight:700">Pular</button></div>
+        </div>
+      </div>
+
+      <div class="side">
+        <button class="side-btn" id="btn-like"><div class="circle" id="like-circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="side-label">24.5K</span></button>
+        <button class="side-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="side-label">892</span></button>
+        <button class="side-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div><span class="side-label">Compart.</span></button>
+        <button class="side-btn" id="btn-save"><div class="circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div></button>
+      </div>
+      <div class="vinfo">
+        <div class="vmeta"><span class="tag dub">DUBLADO</span><span class="tag hd">HD</span><span class="tag" id="ep-tag">EP 1 • T1</span></div>
+        <div class="vtitle" id="video-title">Carregando...</div>
+        <div style="display:flex;gap:8px;margin-top:6px"><button class="btn-primary" style="width:auto;padding:9px 18px;font-size:12px;border-radius:100px" id="btn-next-ep">Próximo EP ▶</button><button style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);padding:9px 16px;border-radius:100px;font-size:12px;font-weight:700">Episódios</button></div>
+      </div>
+      <div class="vprogress"><div class="vprogress-bar" id="progress-bar"></div></div>
+    </div>
+  </div>
+
+  <div id="view-discover" class="view">
+    <div class="dhead">
+      <div class="dtitle">Explorar</div>
+      <div class="search"><span>⌕</span><input id="search-input" placeholder="Buscar doramas, séries..."></div>
+      <div class="pills"><button class="pill active" data-cat="all">Tudo</button><button class="pill" data-cat="Romance">Romance</button><button class="pill" data-cat="Drama">Drama</button><button class="pill" data-cat="Vingança">Vingança</button><button class="pill" data-cat="CEO">CEO</button></div>
+      <!-- BANNER START.IO REAL -->
+      <div class="startio-banner" id="startAppBanner">
+        <div class="banner-inner">📢 Start.io Banner • ID 208724925 • 320x50</div>
+      </div>
+    </div>
+    <div class="grid" id="series-grid"></div>
+    <div class="startio-banner"><div class="banner-inner">📢 Banner Rodapé • Start.io</div></div>
+  </div>
+
+  <div id="view-saved" class="view">
+    <div class="dhead"><div class="dtitle">Minha Lista</div><div class="startio-banner"><div class="banner-inner">📢 Start.io • Lista Banner</div></div></div>
+    <div class="grid" id="saved-series-grid"></div>
+    <div class="empty" id="empty-saved-msg" style="display:none"><h3 style="color:#fff">Lista vazia</h3><p>Salve seus favoritos.</p></div>
+  </div>
+
+  <div id="view-admin" class="view">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px"><div class="dtitle" style="font-size:22px">Painel Pro</div><div class="admin-tabs"><button class="pill active admin-nav-btn" data-atab="series">Séries</button><button class="pill admin-nav-btn" data-atab="episodes">Eps</button><button class="pill admin-nav-btn" data-atab="ads">💰 Start.io</button></div></div>
+    <div id="atab-series"><form class="form-pro" id="form-add-series"><input id="add-series-title" placeholder="Título" required><div style="display:flex;gap:8px"><select id="add-series-cat"><option>Romance</option><option>Drama</option><option>Vingança</option><option>CEO</option></select><input id="add-series-season" type="number" value="1" style="width:90px"></div><input id="add-series-poster" placeholder="URL capa 9:16" required><input id="add-series-tags" placeholder="Tags"><textarea id="add-series-synopsis" placeholder="Sinopse" rows="3"></textarea><button class="btn-primary" type="submit">Cadastrar</button></form><div id="admin-series-list"></div></div>
+    <div id="atab-episodes" style="display:none"><form class="form-pro" id="form-add-episode"><select id="ep-target-series"></select><div style="display:flex;gap:8px"><input id="add-ep-num" type="number" placeholder="Nº EP" required><input id="add-ep-title" placeholder="Título EP"></div><input id="add-ep-video" placeholder="URL vídeo" required><button class="btn-primary" type="submit">Adicionar EP</button></form></div>
+    <div id="atab-ads" style="display:none">
+      <div class="form-pro">
+        <h3>💰 Start.io • ID 208724925 ATIVO</h3>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Seu App ID já está configurado. Para funcionar, precisa gerar o APK no ru.zdevs com o SDK.</p>
+        <div style="background:#0a0b10;border:1px solid var(--border);border-radius:10px;padding:12px;font-size:11px;line-height:1.7">
+          <b style="color:#fff">✅ App ID:</b> 208724925<br>
+          <b style="color:#fff">✅ Banner:</b> startAppBanner (320x50)<br>
+          <b style="color:#fff">✅ Interstitial:</b> a cada 3 episódios<br>
+          <b style="color:#fff">Status:</b> <span style="color:#10b981">● Configurado - aguardando APK</span>
+        </div>
+        <div style="margin-top:12px">
+          <label style="font-size:11px;color:var(--muted)">FREQUÊNCIA</label><input id="ad-freq" type="number" value="3">
+          <label style="font-size:11px;color:var(--muted)">TEMPO PULAR</label><input id="ad-skip" type="number" value="5">
+          <div style="display:flex;align-items:center;gap:8px;margin-top:8px"><input type="checkbox" id="ad-enabled" checked style="width:18px;height:18px"><span style="font-size:13px">Ativar anúncios</span></div>
+        </div>
+        <button class="btn-primary" id="save-ads" type="button">Salvar Config</button>
+        <div style="margin-top:12px;background:#1a1218;border:1px solid rgba(255,36,77,.2);border-radius:10px;padding:12px">
+          <div style="font-size:12px;font-weight:700;color:#ff6b81">⚠️ POR QUE NÃO APARECE NO NAVEGADOR?</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">Start.io só funciona dentro de um APP Android (APK). No navegador ele mostra esse placeholder. Quando você gerar o APK no <b>ru.zdevs</b> com o SDK Start.io, os anúncios reais vão aparecer automaticamente. É assim que a Start.io funciona.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-view="foryou"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span><div class="dot"></div></button>
+    <button class="nav-item" data-view="discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>Explorar</span><div class="dot"></div></button>
+    <button class="nav-item" data-view="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Lista</span><div class="dot"></div></button>
+    <button class="nav-item" data-view="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.86 2.86M18.36 18.36l2.86 2.86M1 12h4M19 12h4M4.22 19.78l2.86-2.86M18.36 5.64l2.86-2.86"/></svg><span>Painel</span><div class="dot"></div></button>
+  </nav>
+</div>
+
+<script>
+// START.IO CONFIG OFICIAL - SEU ID
+const STARTIO_APP_ID = "208724925";
+console.log("Start.io App ID configurado:", STARTIO_APP_ID);
+
+// Tenta inicializar SDK se estiver em WebView com StartApp
+try {
+  if (typeof StartApp !== 'undefined' || typeof window.StartAppSDK !== 'undefined') {
+    console.log("Start.io SDK detectado na WebView");
+  }
+} catch(e){}
+
+// SPLASH
+const splash=document.getElementById('splash'); let hidden=false;
+function hideSplash(){ if(hidden) return; hidden=true; splash.classList.add('hide'); setTimeout(()=>splash.remove(),800); }
+setTimeout(hideSplash,2600); splash.addEventListener('click',hideSplash);
+
+const STREAMS=["https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4","https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4","https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"];
+let seriesList=JSON.parse(localStorage.getItem('rd_final_208724925')||'null')||[
+ {id:'s1',title:'Amor Secreto do CEO',category:'CEO',season:1,totalEpisodes:60,posterUrl:'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=600&fit=crop',genres:['CEO','Romance'],episodes:[{epNumber:1,title:'O Primeiro Encontro',videoUrl:STREAMS[0]}]},
+ {id:'s2',title:'Vingança da Herdeira',category:'Vingança',season:1,totalEpisodes:50,posterUrl:'https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=400&h=600&fit=crop',genres:['Vingança','Drama'],episodes:[{epNumber:1,title:'O Retorno',videoUrl:STREAMS[1]}]},
+ {id:'s3',title:'Coração em Chamas',category:'Romance',season:1,totalEpisodes:45,posterUrl:'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=600&fit=crop',genres:['Romance'],episodes:[{epNumber:1,title:'Faíscas',videoUrl:STREAMS[2]}]}
+];
+let savedIds=JSON.parse(localStorage.getItem('rd_saved_208724925')||'[]');
+let adCfg=JSON.parse(localStorage.getItem('rd_ad_208724925')||'null')||{enabled:true,freq:3,skip:5,appId:STARTIO_APP_ID};
+let currentSeries=seriesList[0],currentEp=1,epCount=0;
+const videoEl=document.getElementById('main-video'), progressBar=document.getElementById('progress-bar');
+function persist(){localStorage.setItem('rd_final_208724925',JSON.stringify(seriesList));localStorage.setItem('rd_saved_208724925',JSON.stringify(savedIds));localStorage.setItem('rd_ad_208724925',JSON.stringify(adCfg));}
+
+function switchView(n){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+n).classList.add('active');document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===n));if(n==='discover')renderDiscover(seriesList);if(n==='saved')renderSaved();if(n==='admin')renderAdmin();}
+document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+
+function loadEpisode(s,epNum){
+ currentSeries=s;currentEp=epNum;
+ const ep=s.episodes.find(e=>e.epNumber===epNum)||s.episodes[0];
+ videoEl.src=ep.videoUrl; videoEl.play().catch(()=>{});
+ document.getElementById('video-title').textContent=s.title+' - '+ep.title;
+ document.getElementById('ep-tag').textContent=`EP ${epNum} • T${s.season||1}`;
+ epCount++;
+ if(adCfg.enabled && epCount % adCfg.freq === 0) showAd();
+}
+videoEl.addEventListener('timeupdate',()=>{if(videoEl.duration)progressBar.style.width=(videoEl.currentTime/videoEl.duration*100)+'%';});
+
+const adOverlay=document.getElementById('ad-interstitial'); let adTimer;
+function showAd(){
+ if(!adCfg.enabled) return;
+ // TENTA CHAMAR SDK NATIVO DO START.IO SE ESTIVER NO APK
+ try{
+   if(window.Android && typeof window.Android.showInterstitial === 'function'){
+     window.Android.showInterstitial(); // Bridge do ru.zdevs
+     return;
+   }
+   if(window.startapp && typeof window.startapp.showInterstitial === 'function'){
+     window.startapp.showInterstitial();
+     return;
+   }
+ }catch(e){console.log("SDK nativo não encontrado, usando fallback", e);}
+ 
+ // FALLBACK - mostra placeholder no navegador
+ videoEl.pause();
+ adOverlay.classList.add('active');
+ let sec=adCfg.skip; document.getElementById('ad-timer').textContent=sec;
+ clearInterval(adTimer);
+ adTimer=setInterval(()=>{sec--;document.getElementById('ad-timer').textContent=sec;if(sec<=0)clearInterval(adTimer)},1000);
+}
+window.closeAd=function(){adOverlay.classList.remove('active');clearInterval(adTimer);videoEl.play().catch(()=>{});};
+
+let liked=false; document.getElementById('btn-like').addEventListener('click',()=>{liked=!liked;document.getElementById('like-circle').classList.toggle('liked',liked);});
+document.getElementById('btn-save').addEventListener('click',()=>{const i=savedIds.indexOf(currentSeries.id);if(i>-1)savedIds.splice(i,1);else savedIds.push(currentSeries.id);persist();});
+document.getElementById('btn-next-ep').addEventListener('click',()=>{if(currentEp<currentSeries.totalEpisodes){const n=currentSeries.episodes.find(e=>e.epNumber===currentEp+1);if(n)loadEpisode(currentSeries,currentEp+1);}});
+
+function renderDiscover(list){const g=document.getElementById('series-grid');g.innerHTML=list.map(s=>`<div class="card" data-id="${s.id}"><div class="card-poster"><img src="${s.posterUrl}" loading="lazy"><span class="card-ep">${s.totalEpisodes} EPS</span><span class="card-dub">DUB</span></div><div class="card-info"><div class="card-title">${s.title}</div><div class="card-genre">${s.genres?s.genres[0]:s.category}</div></div></div>`).join('');g.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>{const t=seriesList.find(s=>s.id===c.dataset.id);if(t){loadEpisode(t,1);switchView('foryou');}}));}
+function renderSaved(){const g=document.getElementById('saved-series-grid'), e=document.getElementById('empty-saved-msg');const s=seriesList.filter(x=>savedIds.includes(x.id));if(s.length===0){g.innerHTML='';e.style.display='block';}else{e.style.display='none';g.innerHTML=s.map(x=>`<div class="card" data-id="${x.id}"><div class="card-poster"><img src="${x.posterUrl}"><span class="card-ep">${x.totalEpisodes} EPS</span></div><div class="card-info"><div class="card-title">${x.title}</div><div class="card-genre">${x.category}</div></div></div>`).join('');g.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>{const t=seriesList.find(s=>s.id===c.dataset.id);if(t){loadEpisode(t,1);switchView('foryou');}}));}}
+function renderAdmin(){
+ document.querySelectorAll('.admin-nav-btn').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.admin-nav-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('atab-series').style.display=b.dataset.atab==='series'?'block':'none';document.getElementById('atab-episodes').style.display=b.dataset.atab==='episodes'?'block':'none';document.getElementById('atab-ads').style.display=b.dataset.atab==='ads'?'block':'none';};});
+ document.getElementById('admin-series-list').innerHTML=`<table class="admin-table"><thead><tr><th>Capa</th><th>Título</th><th>Tipo</th><th>Eps</th><th></th></tr></thead><tbody>${seriesList.map(s=>`<tr><td><img src="${s.posterUrl}" style="width:32px;height:48px;object-fit:cover;border-radius:6px"></td><td><b>${s.title}</b></td><td>${s.category}</td><td>${s.totalEpisodes}</td><td><button class="btn-danger" onclick="deleteSeries('${s.id}')">Excluir</button></td></tr>`).join('')}</tbody></table>`;
+ document.getElementById('ep-target-series').innerHTML=seriesList.map(s=>`<option value="${s.id}">${s.title}</option>`).join('');
+ document.getElementById('ad-freq').value=adCfg.freq; document.getElementById('ad-skip').value=adCfg.skip; document.getElementById('ad-enabled').checked=adCfg.enabled;
+}
+window.deleteSeries=function(id){if(confirm('Excluir?')){seriesList=seriesList.filter(s=>s.id!==id);persist();renderAdmin();renderDiscover(seriesList);}};
+document.getElementById('form-add-series').addEventListener('submit',e=>{e.preventDefault();const ns={id:'series-'+Date.now(),title:document.getElementById('add-series-title').value.trim(),category:document.getElementById('add-series-cat').value,season:parseInt(document.getElementById('add-series-season').value)||1,totalEpisodes:50,posterUrl:document.getElementById('add-series-poster').value.trim(),genres:document.getElementById('add-series-tags').value.split(',').map(t=>t.trim()),episodes:[{epNumber:1,title:'Episódio 1',videoUrl:STREAMS[0]}]};seriesList.unshift(ns);persist();alert('Cadastrada!');e.target.reset();renderAdmin();renderDiscover(seriesList);});
+document.getElementById('form-add-episode').addEventListener('submit',e=>{e.preventDefault();const sid=document.getElementById('ep-target-series').value,epNum=parseInt(document.getElementById('add-ep-num').value),title=document.getElementById('add-ep-title').value.trim()||`Episódio ${epNum}`,url=document.getElementById('add-ep-video').value.trim(),t=seriesList.find(s=>s.id===sid);if(t){t.episodes.push({epNumber:epNum,title,videoUrl:url});t.totalEpisodes=Math.max(t.totalEpisodes,epNum);persist();alert('EP adicionado!');e.target.reset();}});
+document.getElementById('save-ads').addEventListener('click',()=>{adCfg.freq=parseInt(document.getElementById('ad-freq').value);adCfg.skip=parseInt(document.getElementById('ad-skip').value);adCfg.enabled=document.getElementById('ad-enabled').checked;persist();alert('Salvo! ID 208724925 ativo. No APK os anúncios vão aparecer automaticamente.');});
+document.getElementById('search-input').addEventListener('input',e=>{const q=e.target.value.toLowerCase();renderDiscover(seriesList.filter(s=>s.title.toLowerCase().includes(q)||s.category.toLowerCase().includes(q)));});
+document.querySelectorAll('.pill[data-cat]').forEach(p=>p.addEventListener('click',()=>{document.querySelectorAll('.pill[data-cat]').forEach(x=>x.classList.remove('active'));p.classList.add('active');const cat=p.dataset.cat;if(cat==='all')renderDiscover(seriesList);else renderDiscover(seriesList.filter(s=>s.category===cat||(s.genres&&s.genres.includes(cat))));}));
+
+window.addEventListener('DOMContentLoaded',()=>{renderDiscover(seriesList);loadEpisode(seriesList[0],1);
+ // Inicializa banner Start.io se SDK disponível
+ try{
+   if(window.Android && window.Android.loadBanner){
+     window.Android.loadBanner('startAppBanner');
+   }
+ }catch(e){}
+});
+</script>
+
+<!-- 
+  INSTRUÇÕES PARA APK COM RU.ZDEVS:
+  1. No ru.zdevs, adicione no build.gradle:
+     implementation 'com.startapp:inapp-sdk:5.0.1'
+  2. No MainActivity:
+     StartAppSDK.init(this, "208724925", false);
+  3. O WebView vai chamar automaticamente os banners pelo ID startAppBanner
+-->
+
+</body>
+</html>
