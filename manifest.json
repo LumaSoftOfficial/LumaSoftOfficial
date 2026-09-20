@@ -1,0 +1,35 @@
+{
+  "background_color": "#07080c",
+  "categories": [
+    "entertainment",
+    "video"
+  ],
+  "description": "Plataforma premium de micro-dramas verticais 9:16 com feed interativo, anuncios Start.io ID 208724925",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "browser"
+  ],
+  "icons": [
+    {
+      "purpose": "any maskable",
+      "sizes": "512x512",
+      "src": "https://cdn-icons-png.flaticon.com/512/2503/2503508.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "https://cdn-icons-png.flaticon.com/512/2503/2503508.png",
+      "type": "image/png"
+    }
+  ],
+  "lang": "pt-BR",
+  "name": "ReelsDrama - Series e Doramas Premium 9:16",
+  "orientation": "portrait",
+  "scope": "/LumaSoftOfficial/",
+  "short_name": "ReelsDrama",
+  "start_url": "/LumaSoftOfficial/",
+  "theme_color": "#ff244d"
+}
